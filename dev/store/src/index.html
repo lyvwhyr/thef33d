@@ -1,0 +1,82 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <title>theF33D</title>
+
+    <meta charset="utf-8">
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="/images/og-image.png">
+    <meta property="og:title" content="thef33d">
+    <meta property="og:description" content="">
+
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
+
+    <link rel="stylesheet" href="/styles/main.css">
+
+
+  </head>
+  <body ng-app="thef33d">
+
+
+    <div class="header" ng-contoller="HeaderController">
+      <div class="header-search-bar-menu-button no-select">
+        <i class="material-icons" ng-click="vm.sideBarOpen = !vm.sideBarOpen">menu</i>
+      </div>
+
+      <div class="logo">
+      </div>
+
+      <div class="header-search-bar">
+
+        <input class="header-search-bar-input" type="text" ng-model="vm.searchQuery">
+        <div class="header-search-bar-button no-select" ng-click="vm.onSearch()">
+          <i class="material-icons">search</i>
+        </div>
+
+      </div>
+
+      <div class="header-side-bar" ng-class="{'active': vm.sideBarOpen}"></div>
+    </div>
+
+    <div class="product" ng-controller="ProductViewController">
+      <div class="product-container" ng-repeat="product in products">
+
+        <div class="product-card">
+          <div class="product-contents">
+            <div class="product-action-button">
+              <i class="material-icons">add</i>
+            </div>
+            <div class="products-image">
+              <img ng-src="{{product.largeImage}}" />
+            </div>
+            <div class="products-title">{{product.name}}</div>
+            <div class="products-price">
+              <p>{{product.cheapestPrice}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO: change UA-XXXXX-X to be your site's ID. -->
+    <script>(function(e,t,n,r,i,s){e.GoogleAnalyticsObject=r;e[r]||(e[r]=function(){(e[r].q=e[r].q||[]).push(arguments)});e[r].l=+(new Date);i=t.createElement(n);s=t.getElementsByTagName(n)[0];i.src='//www.google-analytics.com/analytics.js';s.parentNode.insertBefore(i,s)})(window,document,'script','ga');ga('create','UA-XXXXX-X');ga('send','pageview')</script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.2/lodash.min.js"></script>
+
+    <script src="scripts/AmazonSearchService.js"></script>
+    <script src="scripts/HeaderViewController.js"></script>
+    <script src="scripts/ProductViewController.js"></script>
+    <script src="scripts/index.js"></script>
+
+  </body>
+</html>
