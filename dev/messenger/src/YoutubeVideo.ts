@@ -1,0 +1,123 @@
+import YoutubeSearch from './YoutubeSearch';
+
+export default class YoutubeVideo {
+  playerDomn: any;
+  player: any;
+  uri: string;
+  playing: boolean;
+  videoId: string;
+  done: boolean;
+  volume: number;
+  options = {
+    auto_play:      1,
+    controls:       0,
+    autohide:       1,
+    wmode:          'opaque',
+    disablekb:      1, //diable keyboard controls
+    fs:             0, //full screen button param
+    modestbranding: 1
+  };
+  playerVars = {
+    enablejsapi: 1,
+    modestbranding: 1,
+    controls: 2,
+    disablekb: 1,
+    autohide: 1,
+    iv_load_policy: 3,
+    showinfo: 0,
+    autoplay: 0
+  };
+
+  constructor(playerID: string) {
+    this.playerDomn = document.getElementById(playerID);
+    this.playerDomn.src = '';
+    /*playerDom.attr('src', '//www.youtube.com/embed/' +
+      videoId + '?rel=0' +
+      '&amp;controls=0' +
+      '&amp;showinfo=0' +
+      '&amp;autoplay=1' +
+      '&amp;iv_load_policy=3' +
+      '&amp;modestbranding=1');
+    var player = new YT.Player('casparPlayer', {
+        height: '104',
+        width: '187',
+        videoId: 'sSZHjQennxM',
+        playerVars: playerVars,
+        events: {
+          'onReady': onPlayerReady,
+        }
+    });*/
+    //this.player = this.createPlayer();
+    
+  }
+
+  createPlayer(videoId: string): any {
+    return YT.Player('player', {
+          height: '135',
+          width: '240',
+          videoId: videoId,
+          playerVars: this.options,
+          events: {
+            'onReady': this.ready,
+            'onStateChange': this.stateChange,
+            'onError': this.playerError
+          }
+    });
+  }
+
+  play(): void {
+    this.playing = true;
+  }
+
+  pause(): void {
+    this.playing = false;
+  }
+
+  stop(): void {
+
+  }
+
+  finished(): void {
+    this.playing = false;
+  }
+
+  ready(evt): void {
+    evt.target.playVideo();
+  }
+
+  stateChange(evt): void {
+    if (evt.data == YT.PlayerState.PLAYING) {
+        this.playing = true;
+      } else {
+        this.playing = false;
+      }
+  }
+
+  playerError(error: any): void {
+    console.log(error);
+  }
+
+  toggleAudio(): void {
+    let that = this;
+    this.player.getVolume(function onGetVolume(volume: number) {
+      let newVolume;
+      if(volume === 0) {
+        newVolume = that.volume;
+      }
+      else {
+        newVolume = 0;
+      }
+      //trigger API
+      that.player.setVolume(newVolume);
+    });
+  }
+
+  togglePlayback(): void {
+    if(this.playing) {
+      this.player.stopVideo();
+    } else {
+      this.player.play();
+    }
+  }
+
+}

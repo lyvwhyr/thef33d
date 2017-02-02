@@ -1,4 +1,3 @@
-'use strict';
 
 var gulp = require('gulp');
 var del = require('del');
@@ -13,9 +12,7 @@ var $ = require('gulp-load-plugins')();
 var browserify = require('browserify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream'),
-
     sourceFile = './app/scripts/app.js',
-
     destFolder = './dist/scripts',
     destFileName = 'app.js';
 
@@ -23,12 +20,12 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
 // Styles
-gulp.task('styles', ['moveCss', 'stylus' ]);
+gulp.task('styles', ['moveCss', 'stylus']);
 
-gulp.task('moveCss',['clean'], function(){
+gulp.task('moveCss',['clean'], function() {
   // the base option sets the relative root for the set of files,
   // preserving the folder structure
-  gulp.src(['./app/styles/**/*.css'], { base: './app/styles/' })
+  gulp.src(['./app/styles/**/*.css'], {base: './app/styles/'})
   .pipe(gulp.dest('dist/styles'));
 });
 
@@ -44,19 +41,17 @@ gulp.task('stylus', function() {
 gulp.task('typescript', function() {
     return gulp.src('app/scripts/**/*.ts')
         .pipe(typescript())
-        .pipe(gulp.dest('./app/scripts'))
+        .pipe(gulp.dest(destFolder))
         .pipe($.size());
 });
 
-
-
-var bundler = watchify(browserify({
+let bundler = watchify(browserify({
     entries: [sourceFile],
     debug: true,
     insertGlobals: true,
     cache: {},
     packageCache: {},
-    fullPaths: true
+    fullPaths: true,
 }));
 
 bundler.on('update', rebundle);
@@ -150,8 +145,8 @@ gulp.task('moveLibraries',['clean'], function(){
 
 // Bower helper
 gulp.task('bower', function() {
-    gulp.src('app/bower_components/**/*.js', {
-            base: 'app/bower_components'
+    gulp.src('bower_components/**/*.js', {
+            base: 'bower_components'
         })
         .pipe(gulp.dest('dist/bower_components/'));
 
@@ -193,7 +188,7 @@ gulp.task('watch', ['html', 'fonts', 'typescript', 'bundle'], function() {
   gulp.watch(['app/styles/**/*.styl', 'app/styles/**/*.css'],
       ['styles', 'scripts', reload]);
 
-    gulp.watch('app/scripts/**/*.ts', ['typescript', 'scripts', reload]);
+    gulp.watch(['app/scripts/**/*.ts', 'app/scripts/**/*.js'], ['typescript', 'scripts', reload]);
 
     // Watch image files
     gulp.watch('app/images/**/*', reload);
