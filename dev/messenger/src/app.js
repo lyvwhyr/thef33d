@@ -81,7 +81,7 @@ $(function(){
   $('.message_bar #sendIt').on('click', function() {
     sendMessage();
   });
-  $('.message_bar input').on('keyup paste change keydown', function(e) {
+  $('.message_bar input').on('¡ paste change keydown', function(e) {
     var textLength = $('.message_bar input').val().length || 0;
     var sendButton = $('#sendIt');
     if(textLength || textLength > 0) {
