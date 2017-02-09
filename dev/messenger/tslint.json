@@ -14,8 +14,7 @@
       "variables-before-functions"
     ],
     "no-bitwise": true,
-    "no-consecutive-blank-lines": 
-    [ true ] ,
+    "no-consecutive-blank-lines": true,
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
@@ -39,7 +38,7 @@
       "single"
     ],
     "radix": true,
-    "semicolon": [ true ],
+    "semicolon": true,
     "triple-equals": [
       true,
       "allow-null-check"
@@ -74,6 +73,24 @@
       "check-separator",
       "check-module",
       "check-type"
-    ]
+    ],
+    "directive-selector": [true, "element", "agm", "kebab-case"],
+    "component-selector": [true, "element", "agm", "kebab-case"],
+    "use-input-property-decorator": false,
+    "use-output-property-decorator": false,
+    "use-host-property-decorator": false,
+    "no-attribute-parameter-decorator": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "no-forward-ref": true,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "pipe-naming": [true, "camelCase", "agm"],
+    "component-class-suffix": false,
+    "directive-class-suffix": false,
+    "import-destructuring-spacing": false,
+    "templates-use-public": true,
+    "no-access-missing-member": true,
+    "invoke-injectable": true
 	}
 }

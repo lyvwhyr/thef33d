@@ -1,7 +1,8 @@
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var path = require('path');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+let poststylus = require('poststylus')
+let path = require('path');
 
-module.exports = {
+const config = {
   devServer: {
     outputPath: path.join(__dirname, 'dist'),
     colors: false
@@ -13,23 +14,44 @@ module.exports = {
   module: {
     rules: [
       {
+        enforce: 'pre',
+        test: /\.ts$/,
+        loader: 'tslint-loader'
+      },
+      {
         test: /\.ts$/,
         loader: 'ts-loader'
       },
       {
-        enforce: 'pre',
-        test: /\.ts$/,
-        loader: 'tslint-loader'
+        test: /\.css$/,
+        loader: 'style!css!postcss',
+        exculde:[ 
+          '/node_modules/'
+        ]
+      },
+			{
+        test: /\.styl$/,
+        loader: 'style!css!stylus',
+        exculde: /node_modules/
       }
     ],
   },
+  stylus: {
+		use: [
+      poststylus(['autoprefixer', 'postcss-short', 'postcss-sorting', 'postcss-cssnext', 'rucksack-css'])
+    ]
+	},
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   plugins: [
-    new CopyWebpackPlugin([{ from: 'src/public' }])],
+    new CopyWebpackPlugin([{ from: 'src/public' }])
+  ],
   resolve: {
     extensions: ['.ts']
   }
 }
+
+
+module.exports = config;
