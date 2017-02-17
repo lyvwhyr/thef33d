@@ -25,18 +25,20 @@ const config = {
       {
         test: /\.css$/,
         loader: 'style!css!postcss',
-        exculde:[ 
+        exclude:[
           '/node_modules/'
         ]
       },
 			{
         test: /\.styl$/,
         loader: 'style!css!stylus',
-        exculde: /node_modules/
+        exclude: [
+          '/node_modules/'
+        ]
       }
     ],
   },
-  stylus: {
+  loader: {
 		use: [
       poststylus(['autoprefixer', 'postcss-short', 'postcss-sorting', 'postcss-cssnext', 'rucksack-css'])
     ]

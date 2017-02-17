@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="floating-panel">
+      <input id="address" type="textbox" value="Sydney, NSW">
+      <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="map"></div>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlbo40yYWavEFfzLVmQP0Kjb2QKeh9f8w&callback=initMap">
+    </script>
+     <script>
+      var thangs = [
+        "10455 N Central Expresswy #115, Dallas, TX 75231, United States",
+        "11920 Preston Rd, Dallas, TX 75230, United States",
+        "1380 W Campbell Rd, Dallas, TX 75080, United States",
+        "14280 Marsh Ln, Addison, TX 75001, United States",
+        "14999 Preston Rd, Dallas, TX 75254, United States",
+        "18212 Preston Rd, Dallas, TX 75252, United States",
+        "315 S Hampton Rd, Dallas, TX 75208, United States",
+        "3757 Forest Ln, Dallas, TX 75244, United States",
+        "3878 Oak Lawn Ave, Dallas, TX 75219, United States",
+        "4001 Villanova St, Dallas, TX 75225, United States",
+        "5809 E Lovers Ln, Dallas, TX 75206, United States",
+        "5959 Royal Ln, Dallas, TX 75230, United States",
+        "6333 E Mockingbird Ln, Dallas, TX 75214, United States",
+        "7000 Snider Plz, Dallas, TX 75205, United States",
+        "7117 Inwood Rd, Dallas, TX 75209, United States",
+        "7331 Gaston Ave, Dallas, TX 75214, United States",
+        "7700 W Northwest Hwy, Dallas, TX 75225, United States",
+        "8698 Skillman St, Dallas, TX 75243, United States",
+        "2960 Anode Ln, Dallas, TX 75220, United States",
+        "1600 W Northwest Hwy, Dallas, TX 75220, United States",
+        "10495 Olympic Dr, Dallas, TX 75220, United States",
+        "5959 Royal Ln, Dallas, TX 75230, United States",
+        "9972 Marsh Ln, Dallas, TX 75220, United States",
+        "9500 N Central Expwy #200, Dallas, TX 75231, United States",
+        "8123 Preston Rd, Dallas, TX 75225, United States"
+      ];
+      var done = [];
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        var geocoder = new google.maps.Geocoder();
+        _.each(thangs, function(v) {
+          var wait = _.random(1000, 20000);
+          _.delay( geocodeAddress, wait, geocoder, v);
+        });
+
+
+
+      }
+
+      function geocodeAddress(geocoder, address) {
+        var add =  address;
+        var thangsLeng = thangs.length;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            // resultsMap.setCenter(results[0].geometry.location);
+            //var marker = new google.maps.Marker({
+             // map: resultsMap,
+             // position: results[0].geometry.location
+            //});
+            var payload = {address: add, lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
+            
+            done.push(payload);
+            console.log(add, payload);
+            console.log(done.length);
+            console.debug(done);
+            console.log(JSON.stringify(done));
+            if (done.length === thangsLeng) {
+              console.log(JSON.stringify(done));
+            }
+
+          } else {
+            console.error('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

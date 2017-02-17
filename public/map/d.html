@@ -1,0 +1,51 @@
+<html>
+<head>
+<script type="text/javascript">
+
+//Constructor for Television class
+function Television(manfac, diag, price) {
+  this.manufacture = manfac;
+  this.size = diag;
+  this.retailPrice = parseFloat(price);
+
+  this.setPrice = setPrice;
+  this.displayInfo = displayInfo;       
+} //End Television function
+
+//Function to set price 
+function setPrice(p){ 
+  var p = parseFloat(p);
+  this.retailPrice = p;
+  document.write("The new price is: $" + this.retailPrice + BR);
+} 
+
+//Function to display info
+function displayInfo(){
+  document.write("Manufacturer: " + deetv.manufacture + BR);
+  document.write("The size diagonally in inches: " + deetv.size + BR);
+  document.write("The retail price is: " +  deetv.retailPrice.toFixed(2)+ BR);
+}
+
+</script>
+</head>
+
+<body>
+<script type="text/javascript">
+
+  //Variables and constants
+
+  var BR = "<br />"; //HTML line break
+  var deetv = new Television("Sony", 52, 1299.00);
+
+  //Display the information about the tv
+  deetv.displayInfo();
+
+  //Change the price to $990.00
+  deetv.setPrice(990.00);
+
+  //Display the information after the price change
+  deetv.displayInfo();
+
+</script>
+</body>
+</html>
