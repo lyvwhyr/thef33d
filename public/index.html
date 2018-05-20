@@ -5,216 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,500italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+<meta name="mobile-web-app-capable" content="yes">
+
 <title>You Don't Belong Here</title>
-<style>
-img{
-  -webkit-user-drag: none;
-  -ms-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  user-drag: none;
-}
-html {
-  background-color: #fff;
-}
-.laughing_cont{
-  width:200px;height:200px;
-  position:relative;
-  margin:20px;
-  -webkit-filter: grayscale(1);
-  -ms-filter: grayscale(1);
-  opacity: 0.2;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  display: inline-block;
-}
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.laughing_cont .text{
-  width: 111%;
-  height: 111%;
-  position: absolute;
-  top: -13px;
-  left: -13px;
-  -webkit-animation: rotation 6s infinite linear;
-  -moz-animation: rotation 6s infinite linear;
-  -ms-animation: rotation 6s infinite linear;
-  animation: rotation 6s infinite linear;
-  -webkit-transform-origin: 50% 42%;
-  -moz-transform-origin: 45% 50%;
-  -ms-transform-origin: 45% 50%;
-  transform-origin: 50% 50%;
-  z-index: -1;
-}
+            html, body {
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                padding:0;
+                margin: 0;
+                font-family: 'Roboto', sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-.text:hover{
-  -webkit-animation: rotation 1s infinite linear;
-  -moz-animation: rotation 1s infinite linear;
-  -ms-animation: rotation 1s infinite linear;
-  animation: rotation 1s infinite linear;
-  z-index: 1;
-}
+            @keyframes fadein {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+            }
 
+            @keyframes scaleIn {
+                0% { 
+                    transform: scale(0.87);
+                    opacity: 0; 
+                }
+                50% {
+                    transform: scale(0.87);
+                    opacity: 0; 
+                }
+                100%   { 
+                    transform: scale(1.0);
+                    opacity: 1; 
+                }
+            }
 
-@-webkit-keyframes rotation {
-  0%     {-webkit-transform: rotate(359deg);}
-  100%   {-webkit-transform: rotate(0deg);}
-}
+            body>video.wall {
+                position: absolute;
+                min-width: 100vw; 
+                min-height: 100vh;
+                z-index: -1;
+                animation: fadein 2s;
+            }
 
-@-ms-keyframes rotation {/* IE 9 */
-  0%     {-ms-transform: rotate(359deg);}
-  100%   {-ms-transform: rotate(0deg);}
-}
+            body>video.wall.glitch {
+                filter: contrast(1.0) hue-rotate(45deg) saturate(2.0);
+                opacity: 0;
+                animation: fadein 2s;
+            }
+            body>div.content {
+                color: #FFF;
+                font-size: 55px;
+                z-index: 2;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none; 
+                -moz-user-select: none; 
+                -ms-user-select: none; 
+                user-select: none;
+                animation: scaleIn 6s;
+            }
 
-@-keyframes rotation {/* IE 9 */
-  0%     {transform: rotate(359deg);}
-  100%   {transform: rotate(0deg);}
-}
+            body>div.content>span {
+                display: block;
+                font-size: 12px;
+            }
 
-@-moz-keyframes rotation {/* IE 9 */
-  0%     {-moz-transform: rotate(359deg);}
-  100%   {-moz-transform: rotate(0deg);}
-}
+        </style>
+    </head>
+    <body>
+        <video class="wall" playsinline autoplay loop muted> 
+            <source src="background.mp4" type="video/mp4">
+          </video>
+          
+          <video class="wall glitch" id="glitch" playsinline autoplay loop muted> 
+            <source src="background.mp4" type="video/mp4">
+          </video>
+          
+          <div class="content" id="content">
+            F Ξ R Λ L
+          </div>
+    </body>
+    <script>
+        var isMusicPlaying = false;
+        var root = document.getElementById('glitch');
+        var mouse_monitor = function(e) {
+        var x = e.clientX/innerWidth;
+        var y = e.clientY/innerHeight;
 
-.laughing_cont .logo{
-  width: 136%;
-  height: 123%;
-  position: absolute;
-  top: -12%;
-  left: -12%;
-}
+        var move_x = (x>0.5) ? '-15px' : '15px';
+        var move_y = (y>0.5) ? '-10px' : '10px';
 
-.windoz{
-  position: absolute;
-  top: 50px;left:calc(50% - 175px);
-  cusor:all-scroll;
-  width: 350px; height: 80px;
-  background-color: rgba(192,192,192,1);
-  border-top: 2px solid rgba(255,255,255,1);
-  border-left: 2px solid rgba(255,255,255,1);
-  border-bottom: 2px solid rgba(100,100,100,1);
-  border-right: 2px solid rgba(100,100,100,1);
-  color:#000;
-  padding: 40px 20px 0px 20px;
-  z-index: 99;
-  font-family: 'VT323';
-  font-size: 18px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
+        root.style.setProperty("left", move_x);
+        root.style.setProperty("top", move_y);
+        }
 
-.windoz .title{
-  margin: 0;
-  width: calc(100% - 8px);height: 20px;
-  position: absolute;
-  line-height: 20px;
-  top:0;left:0;
-  background-color: rgba(0,0,128,1);
-  color: #fff;
-  font-size: 14px;
-  text-align: left;
-  padding: 0 0 0 8px ;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
+        var content = document.getElementById('content');
+        function hoverContent(e) {
+            root.style.setProperty('opacity', '0.5');
+        }
+        function blurConent(e) {
+            root.style.setProperty('opacity', '0');
+        }
 
-.windoz .button{
-  position: absolute;
-  bottom: 10px; right: 15px;
-  width: 60px; height: 30px;
-  margin: 0;padding:0;
-  border-top: 2px solid rgba(255,255,255,1);
-  border-left: 2px solid rgba(255,255,255,1);
-  border-bottom: 2px solid rgba(100,100,100,1);
-  border-right: 2px solid rgba(100,100,100,1);
-  line-height: 30px; text-align: center;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.windoz .button:active{
-  border-bottom: 2px solid rgba(255,255,255,1);
-  border-right: 2px solid rgba(255,255,255,1);
-  border-top: 2px solid rgba(100,100,100,1);
-  border-left: 2px solid rgba(100,100,100,1);
-}
+        var bgm = './background.mp3';
+        var audio = new Audio(bgm);
+        audio.loop = true;
 
-@-webkit-keyframes arrow-jump {
-  0%   { opacity: 0;}
-  100% { opacity: 1;
-        -webkit-transform: translateY(10px);
-        -moz-transform: translateY(10px);
-        -0-transform: translateY(10px);
-        transform: translateY(10px);
-    }
-}
-@-ms-keyframes arrow-jump {
-  0%   { opacity: 0;}
-  100% { opacity: 1;
-        -webkit-transform: translateY(10px);
-        -moz-transform: translateY(10px);
-        -0-transform: translateY(10px);
-        transform: translateY(10px);
-    }
-}
-@-keyframes arrow-jump {
-  0%   { opacity: 0;}
-  100% { opacity: 1;
-        -webkit-transform: translateY(10px);
-        -moz-transform: translateY(10px);
-        -0-transform: translateY(10px);
-        transform: translateY(10px);
-    }
-}
+        function playBG() {
+            audio.play();
+            isMusicPlaying = true;
+        }
 
-#device_type{
-  color: #bbb;
-  text-align: left;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  font-size: 18px;
-  font-weight: 100;
-  font-family: 'Roboto';
-  display: inline-block;
-  padding: 0 20px 30px 20px;;
-  border-bottom: 1px solid #ddd;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-</style>
-<body>
-    <div class="laughing_cont">
-        <img class="text" src="onyx/img/laughing_man_text.png"/>
-        <img class="logo" src="onyx/img/laughing_man_logo.png"/>
-    </div>
+        function pauseBG() {
+            audio.pause();
+            isMusicPlaying = false;
+        }
 
-    <div id="device_type"> ERROR</div>
+        function toggleBG() {
+            if (isMusicPlaying === true) {
+                pauseBG();
+            }
+            else {
+                playBG();
+            }
 
-</body>
+        }
 
 
+        window.onload = function() {
+            content.addEventListener("mouseenter", hoverContent);
+            content.addEventListener("mouseleave", blurConent);
+            content.addEventListener("click", toggleBG);
+            window.addEventListener("mousemove", mouse_monitor);
+            playBG();
+        };
+        
+    </script>
 </html>

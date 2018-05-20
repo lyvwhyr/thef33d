@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "Wakanda",
+  "name": "Web Starter Kit",
   "launch_path": "/index.html",
   "description": "A front-end template that helps you build fast, modern mobile web apps.",
   "icons": {
@@ -18,7 +18,7 @@
   },
   "locales": {
     "en": {
-      "name": "Wakanda",
+      "name": "Web Starter Kit",
       "description": "A front-end template that helps you build fast, modern mobile web apps."
     }
   }
